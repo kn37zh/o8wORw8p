@@ -5,12 +5,14 @@
 using namespace std;
 
 void inputMenu(), mainMenu(), aboutMenu(), \
-	calculate(double a, double b, double step, double n), calculate(double x, double n);
+	calculate(double a, double b, double step, double n), \
+		calculate(double x, double n);
 
 int main() {
 
 	cout << "\033[H\033[2J" << std::flush;
-	cout << "\nList of commands:\n \"input\" to input data.\n \"about\" to learn more\n \"exit\" to exit\n\n";
+	cout << "\nList of commands:\n \"input\" to input data.\n \"about\" " << \
+		"to learn more\n \"exit\" to exit\n\n";
 	mainMenu();
 
 	return 0;
@@ -159,11 +161,12 @@ void calculate(double a, double b, double step, double n) {
 	cin >> fileSave;
 	if (fileSave == "yes") {
 		ofstream outFile;
-		outFile.open("a" + to_string(int(a)) + " b" + to_string(int(b)) + " step" + to_string(int(step)) \
-			+ " n" + to_string(int(n)) + " out.txt");
+		outFile.open("a" + to_string(int(a)) + " b" + to_string(int(b)) + \
+			" step" + to_string(int(step)) + " n" + to_string(int(n)) + " out.txt");
 		outFile << finalOut;
 		outFile.close();
-		cout << "File saved successfully (" << "a" + to_string(int(a)) + " b" + to_string(int(b)) \
+		cout << "File saved successfully (" << "a" + to_string(int(a)) + \
+			" b" + to_string(int(b)) \
 			+ " step" + to_string(int(step)) + " n" + to_string(int(n)) + " out.txt)";
 	}
 	cout << endl;
