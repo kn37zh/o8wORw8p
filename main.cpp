@@ -18,6 +18,8 @@ int main() {
 
 void mainMenu() {
 
+	cout << endl;
+
 	string input;
 	cout << "Type command here: ";
 	cin >> input;
@@ -45,30 +47,72 @@ void inputMenu() {
 	cout << "\033[H\033[2J" << std::flush;
 	cout << "Do you want to set x value or use range (type \"set\" or \"range\"): ";
 	cin >> setOrRange;
+	string inputSource;
+	cout << "Type the input source here (\"keyboard\" or \"file\"): ";
+	cin >> inputSource;
+	cout << endl;
 	if (setOrRange=="set") {
 		cout << "\033[H\033[2J" << std::flush;
 
 		double x, n;
-		cout << "\nType x: ";
-		cin >> x;
-		cout << "Type n: ";
-		cin >> n;
+		if (inputSource=="keyboard") {
+			cout << "\nType x: ";
+			cin >> x;
+			cout << "Type n: ";
+			cin >> n;
+			cout << endl;
+		}
+		if (inputSource=="file") {
+			string fileName;
+			cout << "Type the name of the file to read from: ";
+			cin >> fileName;
+			ifstream inputFile;
+			inputFile.open(fileName);
+			inputFile >> x;
+			inputFile >> n;
+			inputFile.close();
+		}
+		if (inputSource!="keyboard" && inputSource!="file") {
+			cout << "Error";
+			mainMenu();
+		}
 		calculate(x, n);
 	}
 	if (setOrRange=="range") {
 		cout << "\033[H\033[2J" << std::flush;
-
+		
 		double a, b, step, n;
-		cout << "\nType a: ";
-		cin >> a;
-		cout << "Type b: ";
-		cin >> b;
-		cout << "Type step: ";
-		cin >> step;
-		cout << "Type n: ";
-		cin >> n;
-		cout << endl;
+
+		if (inputSource=="keyboard") {
+			cout << "\nType a: ";
+			cin >> a;
+			cout << "Type b: ";
+			cin >> b;
+			cout << "Type step: ";
+			cin >> step;
+			cout << "Type n: ";
+			cin >> n;
+			cout << endl;
+		}
+		if (inputSource=="file") {
+			string fileName;
+			cout << "Type the name of the file to read from: ";
+			cin >> fileName;
+			cout << endl;
+			ifstream inputFile;
+			inputFile.open(fileName);
+			inputFile >> a;
+			inputFile >> b;
+			inputFile >> step;
+			inputFile >> n;
+			inputFile.close();
+		}
+		if (inputSource!="keyboard" && inputSource!="file") {
+			cout << "Error";
+			mainMenu();
+		}
 		calculate(a, b, step, n);
+		
 	}
 	if (setOrRange!="set" && setOrRange!="range") {
 		cout << "Error\n";
@@ -87,7 +131,7 @@ void aboutMenu() {
 }
 
 void calculate(double a, double b, double step, double n) {
-	if (a>b or step<=0) {
+	if (a>b or step<=0 or n<1) {
 		cout << "Wrong input. Press any button to return to the main menu\n";
 		cin.get();
 		mainMenu();
@@ -128,6 +172,11 @@ void calculate(double a, double b, double step, double n) {
 
 void calculate(double x, double n) {
 	double out;
+	if (n<1) {
+		cout << "Wrong input. Press any button to return to the main menu\n";
+		cin.get();
+		mainMenu();
+	}
 	if (x < 0) {
 		out = 0;
 		for (int i=1; i<=n; i++) {
